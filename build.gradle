@@ -3,11 +3,14 @@
 buildscript {
     ext {
         kotlin_version = '1.2.41'
+        ankoVersion = '0.10.5'
         compileSdkVersion = 27
         minSdkVersion = 21
         targetSdkVersion = 27
         versionCode = 1
         versionName = '1.0'
+
+        supportVersion = '27.1.1'
     }
     repositories {
         google()
