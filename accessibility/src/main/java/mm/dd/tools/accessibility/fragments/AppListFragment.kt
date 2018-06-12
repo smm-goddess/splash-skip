@@ -47,10 +47,9 @@ class AppListFragment : Fragment() {
     }
 
     fun updateData() {
-        var done = false
-        for (i in 1..3) {
-            if (!done) {
-                doAsync {
+        doAsync {
+            while (true) {
+                if (DataSource.isDataReady()) {
                     context?.loge("try get data")
                     val data = when (arguments!!["type"]) {
                         TYPE_ADAPTATION -> DataSource.adapted()
@@ -59,11 +58,13 @@ class AppListFragment : Fragment() {
                     }
                     if (data != null && data.isNotEmpty()) {
                         context?.loge("got data")
-                        done = true
                         uiThread {
                             (appRecycler.adapter as SkipAppAdapter).updateData(data)
                         }
                     }
+                    break
+                } else {
+                    Thread.sleep(200)
                 }
             }
         }
