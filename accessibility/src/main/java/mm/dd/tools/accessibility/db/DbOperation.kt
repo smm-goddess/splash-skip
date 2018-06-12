@@ -17,12 +17,7 @@ fun ensureDbExist(ctx: Context, name: String) {
 }
 
 fun Context.enabledPackages(): List<SkipEntity> {
-    return database.use {
-        return@use select("package_info")
-                .whereArgs("(enable={enable})",
-                        "enable" to "1")
-                .parseList(ColumnEntityParser())
-    }
+    return skipPackages().filter { it.enable!! }
 }
 
 fun Context.skipById(): List<SkipEntity> {
@@ -43,13 +38,15 @@ fun Context.enableByType(type: String): List<SkipEntity> {
     }
 }
 
-fun Context.unablePackages(): List<SkipEntity> {
+fun Context.skipPackages(): List<SkipEntity> {
     return database.use {
         return@use select("package_info")
-                .whereArgs("(enable={enable})",
-                        "enable" to "0")
                 .parseList(ColumnEntityParser())
     }
+}
+
+fun Context.unablePackages(): List<SkipEntity> {
+    return skipPackages().filter { !it.enable!! }
 }
 
 class ColumnEntityParser : MapRowParser<SkipEntity> {

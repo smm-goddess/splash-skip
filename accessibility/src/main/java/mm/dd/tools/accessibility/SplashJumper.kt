@@ -65,7 +65,7 @@ class SplashJumper : AccessibilityService() {
                 .groupBy { it.packageName }
                 .mapValues { entry ->
                     entry.value.fold(mutableListOf<String>()) { acc, entity ->
-                        acc.add(entity.target)
+                        acc.add(entity.target!!)
                         acc
                     }
                 }

@@ -28,6 +28,8 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "com.android.support:appcompat-v7:$rootProject.supportVersion"
     implementation "com.android.support:recyclerview-v7:$rootProject.supportVersion"
+    implementation "com.android.support.constraint:constraint-layout:$rootProject.constraintVersion"
+    implementation "com.android.support:design:$rootProject.supportVersion"
     // Anko SQLite
     implementation "org.jetbrains.anko:anko-sqlite:$rootProject.ankoVersion"
     // Anko Commons

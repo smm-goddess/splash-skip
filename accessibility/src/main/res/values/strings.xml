@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">Accessibility</string>
+    <string name="app_name">跳过开屏</string>
     <string name="splash_screen_jumper">自动跳过Splash页面</string>
 </resources>

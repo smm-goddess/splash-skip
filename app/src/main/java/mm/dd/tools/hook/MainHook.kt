@@ -27,5 +27,14 @@ class MainHook : IXposedHookLoadPackage {
                     })
 
         }
+        XposedHelpers.findAndHookMethod("android.telephony.TelephonyManager",
+                lpparam!!.classLoader, "getSimState",
+                object : XC_MethodHook() {
+                    override fun afterHookedMethod(param: MethodHookParam?) {
+                        XposedBridge.log("TelephoneManager:getSimState:${param?.result}")
+                        param?.result = 5
+                        super.afterHookedMethod(param)
+                    }
+                })
     }
 }
