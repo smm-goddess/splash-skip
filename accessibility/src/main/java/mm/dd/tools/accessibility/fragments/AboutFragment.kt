@@ -15,13 +15,21 @@ class AboutFragment : Fragment() {
         }
     }
 
-    private var content:View? = null
+    private var content: View? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        if(content == null){
+        if (content == null) {
             content = inflater.inflate(R.layout.layout_about, null)
         }
         return content
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
     }
 
 }

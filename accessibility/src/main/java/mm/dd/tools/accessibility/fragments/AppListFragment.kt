@@ -10,10 +10,6 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import kotlinx.android.synthetic.main.layout_list.*
 import mm.dd.Tools.accessibility.R
-import mm.dd.tools.accessibility.db.DataSource
-import mm.dd.tools.accessibility.ext.loge
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
 
 class AppListFragment : Fragment() {
 
@@ -47,26 +43,6 @@ class AppListFragment : Fragment() {
     }
 
     fun updateData() {
-        doAsync {
-            while (true) {
-                if (DataSource.isDataReady()) {
-                    context?.loge("try get data")
-                    val data = when (arguments!!["type"]) {
-                        TYPE_ADAPTATION -> DataSource.adapted()
-                        TYPE_NORMAL -> DataSource.unadapted()
-                        else -> emptyList()
-                    }
-                    if (data != null && data.isNotEmpty()) {
-                        context?.loge("got data")
-                        uiThread {
-                            (appRecycler.adapter as SkipAppAdapter).updateData(data)
-                        }
-                    }
-                    break
-                } else {
-                    Thread.sleep(200)
-                }
-            }
-        }
+
     }
 }

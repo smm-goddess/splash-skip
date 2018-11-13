@@ -4,20 +4,21 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.content.pm.ApplicationInfo
 import android.content.res.AssetManager
+import android.support.v4.app.Fragment
 import android.util.Log
 import mm.dd.tools.accessibility.db.SkipEntity
-import mm.dd.tools.accessibility.db.SkipSQLiteHelper
 import java.io.File
 
 fun AssetManager.copy2File(name: String, file: File) {
     file.writeBytes(open(name).readBytes())
 }
 
-val Context.database: SkipSQLiteHelper
-    get() = SkipSQLiteHelper.getInstance(this.applicationContext)
-
 fun Context.loge(s: String) {
     Log.e(this::class.java.simpleName, s)
+}
+
+fun Fragment.loge(s: String) {
+    this.activity?.loge(s)
 }
 
 val Context.sharedPreference: SharedPreferences
@@ -51,15 +52,20 @@ fun <T> Context.savePreference(key: String, value: T) = with(sharedPreference.ed
 
 fun Context.installedPackages(withoutSystem: Boolean): List<SkipEntity> {
     return packageManager.getInstalledPackages(0)
+            .asSequence()
             .filter {
                 if (withoutSystem) {
                     it.applicationInfo.flags.and(ApplicationInfo.FLAG_SYSTEM) != 0
                 }
                 true
-            }.map {
-                val icon = it.applicationInfo.loadIcon(packageManager)
-                val appName = it.applicationInfo.loadLabel(packageManager)
-                SkipEntity(packageName = it.packageName, appName = appName as String,
-                        version = it.versionName, icon = icon)
+            }.map { packageInfo ->
+                val icon = packageInfo.applicationInfo.loadIcon(packageManager)
+                val appName = packageInfo.applicationInfo.loadLabel(packageManager)
+                SkipEntity(
+                        packageName = packageInfo.packageName,
+                        appName = appName as String,
+                        appIcon = icon
+                )
             }
+            .toList()
 }

@@ -11,8 +11,9 @@ import mm.dd.Tools.accessibility.R
 import mm.dd.tools.accessibility.db.SkipEntity
 
 class SkipAppAdapter(private val ctx: Context, var appList: List<SkipEntity>) : RecyclerView.Adapter<SkipViewHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): SkipViewHolder {
+    override fun onCreateViewHolder(p0: ViewGroup, p1: Int): SkipViewHolder {
         return SkipViewHolder(LayoutInflater.from(ctx).inflate(R.layout.item_app, null))
+
     }
 
     override fun getItemCount(): Int {
@@ -22,15 +23,14 @@ class SkipAppAdapter(private val ctx: Context, var appList: List<SkipEntity>) : 
     override fun onBindViewHolder(holder: SkipViewHolder, position: Int) {
         val skipEntity = appList[position]
         with(holder.itemView) {
-            icon.setImageDrawable(skipEntity.icon)
+            icon.setImageDrawable(skipEntity.appIcon)
             packageName.text = skipEntity.packageName
-            version.text = skipEntity.version
             appName.text = skipEntity.appName
         }
     }
 
-    fun updateData(newData: List<SkipEntity>){
-        val diff = DiffUtil.calculateDiff(DiffCallback(appList,newData),true)
+    fun updateData(newData: List<SkipEntity>) {
+        val diff = DiffUtil.calculateDiff(DiffCallback(appList, newData), true)
         appList = newData
         diff.dispatchUpdatesTo(this)
     }
@@ -39,7 +39,7 @@ class SkipAppAdapter(private val ctx: Context, var appList: List<SkipEntity>) : 
 
 class SkipViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
-class DiffCallback(val oldList:List<SkipEntity>,val newList: List<SkipEntity>):DiffUtil.Callback(){
+class DiffCallback(val oldList: List<SkipEntity>, val newList: List<SkipEntity>) : DiffUtil.Callback() {
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
         return oldList[oldItemPosition].packageName == newList[newItemPosition].packageName
     }
@@ -56,6 +56,6 @@ class DiffCallback(val oldList:List<SkipEntity>,val newList: List<SkipEntity>):D
         val old = oldList[oldItemPosition]
         val new = newList[newItemPosition]
         return old.packageName == new.packageName && old.enable == new.enable &&
-                old.appName ==new.appName && old.version == old.version
+                old.appName == new.appName
     }
 }

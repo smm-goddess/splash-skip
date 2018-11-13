@@ -6,24 +6,11 @@ import mm.dd.tools.accessibility.ext.installedPackages
 import org.jetbrains.anko.doAsync
 
 object DataSource {
-    private var packages: List<SkipEntity>? = null
-    private var adaptedPackages: List<SkipEntity>? = null
+    private var installedPackages: List<SkipEntity>? = null
     private var dataSourceReady = false
     fun initSource(ctx: Context) {
         doAsync {
-            packages = ctx.installedPackages(ctx.getPreference("withoutSystem", true))
-            adaptedPackages = ctx.skipPackages()
-            packages!!.map { skipEntity ->
-                val adapted = adaptedPackages!!.firstOrNull { it.packageName == skipEntity.packageName }
-                if (adapted != null) {
-                    skipEntity.run {
-                        id = adapted.id
-                        target = adapted.target
-                        type = adapted.type
-                        enable = adapted.enable
-                    }
-                }
-            }
+            installedPackages = ctx.installedPackages(ctx.getPreference("withoutSystem", true))
             dataSourceReady = true
         }
     }
@@ -34,13 +21,5 @@ object DataSource {
     }
 
     fun isDataReady() = dataSourceReady
-
-    fun adapted(): List<SkipEntity>? {
-        return packages?.filter { it.id != null }
-    }
-
-    fun unadapted(): List<SkipEntity>? {
-        return packages?.filter { it.id == null }
-    }
 
 }
