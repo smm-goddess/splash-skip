@@ -6,7 +6,7 @@ import mm.dd.tools.accessibility.ext.installedPackages
 import org.jetbrains.anko.doAsync
 
 object DataSource {
-    private var installedPackages: List<SkipEntity>? = null
+    private lateinit var installedPackages: List<SkipEntity>
     private var dataSourceReady = false
     fun initSource(ctx: Context) {
         doAsync {
@@ -14,12 +14,5 @@ object DataSource {
             dataSourceReady = true
         }
     }
-
-    fun reload(ctx: Context) {
-        dataSourceReady = false
-        initSource(ctx)
-    }
-
-    fun isDataReady() = dataSourceReady
 
 }

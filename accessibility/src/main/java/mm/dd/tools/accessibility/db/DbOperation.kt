@@ -4,12 +4,12 @@ import android.content.Context
 import mm.dd.tools.accessibility.ext.copy2File
 
 
-fun ensureDbExist(ctx: Context, name: String) {
-    val skipInfoDb = ctx.getDatabasePath(name)
-    if (!skipInfoDb.exists()) {
-        skipInfoDb.parentFile.mkdirs()
-        skipInfoDb.createNewFile()
-        ctx.assets.copy2File(name, skipInfoDb)
+fun copyDbFromAssetsToDatabaseIfNecessary(ctx: Context, name: String) {
+    val dbPath = ctx.getDatabasePath(name)
+    if (!dbPath.exists()) {
+        dbPath.parentFile.mkdirs()
+        dbPath.createNewFile()
+        ctx.assets.copy2File(name, dbPath)
     }
 }
 

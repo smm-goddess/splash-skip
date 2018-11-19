@@ -18,7 +18,7 @@ open class LifecycleAccessibilityService : AccessibilityService(), LifecycleOwne
     override fun onInterrupt() {
     }
 
-    override fun onAccessibilityEvent(p0: AccessibilityEvent?) {
+    override fun onAccessibilityEvent(event: AccessibilityEvent?) {
     }
 
     private val mDispatcher = ServiceLifecycleDispatcher(this)

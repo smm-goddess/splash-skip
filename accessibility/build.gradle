@@ -9,7 +9,7 @@ apply plugin: 'kotlin-kapt'
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "mm.dd.tools.accessibility"
+        applicationId "mm.dd.tools.accessibility.service"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode rootProject.ext.versionCode
